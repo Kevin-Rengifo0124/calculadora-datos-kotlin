@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CalcularEdad(){
+fun CalcularIMC(){
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Calcular Edad")
+            Text("Calcular IMC")
         }
     }
 }
