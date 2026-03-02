@@ -3,16 +3,13 @@ package com.example.tallerjetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +26,9 @@ import com.example.tallerjetpackcompose.ui.theme.TallerJetpackComposeTheme
  */
 sealed class Pantallas(val ruta: String){
     object INICIO: Pantallas("Inicio")
+    object CALCULAR_EDAD: Pantallas("CalcularEdad")
+    object CALCULAR_IMC: Pantallas("CalcularIMC")
+
 }
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +61,24 @@ fun NavegacionPrincipal(navController: NavHostController) {
         startDestination = Pantallas.INICIO.ruta
     ) {
         composable(Pantallas.INICIO.ruta) {
-            Inicio()
+            Inicio(
+                abrirCalcularEdad = {
+                    navController.navigate(Pantallas.CALCULAR_EDAD.ruta){
+                        popUpTo(Pantallas.INICIO.ruta)
+                    }
+                },
+                abrirCalcularIMC = {
+                    navController.navigate(Pantallas.CALCULAR_IMC.ruta){
+                        popUpTo(Pantallas.INICIO.ruta)
+                    }
+                }
+            )
+        }
+        composable(Pantallas.CALCULAR_EDAD.ruta) {
+            CalcularEdad()
+        }
+        composable(Pantallas.CALCULAR_IMC.ruta) {
+            CalcularIMC()
         }
     }
 }
