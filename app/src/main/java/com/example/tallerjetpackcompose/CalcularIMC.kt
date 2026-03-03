@@ -57,3 +57,35 @@ fun FormularioImc(
         colors = coloresCampos
     )
 }
+
+@Composable
+fun ResultadoImc(
+    nombre: String,
+    imc: Double,
+    categoria: String
+) {
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFF2596BE)
+        ),
+        elevation = CardDefaults.cardElevation(6.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+
+            Text(
+                text = "Resultado",
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp,
+                color = Color.White
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text("Nombre: $nombre", color = Color.White)
+            Text("IMC: %.2f".format(imc), color = Color.White)
+            Text("Categoría: $categoria", color = Color.White)
+        }
+    }
+}
