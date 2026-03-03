@@ -10,6 +10,78 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CalcularIMC() {
+
+    var nombre by remember { mutableStateOf("") }
+    var peso by remember { mutableStateOf("") }
+    var estatura by remember { mutableStateOf("") }
+    var resultadoImc by remember { mutableStateOf<Double?>(null) }
+    var categoria by remember { mutableStateOf("") }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    Scaffold(
+        containerColor = Color(0xFF0D1B2A),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        "Calculadora IMC",
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF2596BE),
+                    titleContentColor = Color.White
+                )
+            )
+        },
+        floatingActionButton = {
+            BotonCalcularImc(
+                nombre = nombre,
+                peso = peso,
+                estatura = estatura,
+                onResultado = { imc, cat ->
+                    resultadoImc = imc
+                    categoria = cat
+                },
+                snackbarHostState = snackbarHostState,
+                scope = scope
+            )
+        }
+    ) { innerPadding ->
+
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+
+            FormularioImc(
+                nombre = nombre,
+                peso = peso,
+                estatura = estatura,
+                onNombreChange = { nombre = it },
+                onPesoChange = { peso = it },
+                onEstaturaChange = { estatura = it }
+            )
+
+            resultadoImc?.let {
+                ResultadoImc(
+                    nombre = nombre,
+                    imc = it,
+                    categoria = categoria
+                )
+            }
+        }
+    }
+}
 @Composable
 fun FormularioImc(
     nombre: String,
