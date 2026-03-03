@@ -3,6 +3,7 @@ package com.example.tallerjetpackcompose
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -94,7 +95,7 @@ fun CalcularEdadFAB(
         containerColor = Color(0xFF2596BE)
     ) {
         Icon(
-            imageVector = Icons.Default.Add,
+            imageVector = Icons.Default.Calculate,
             contentDescription = "Calcular edad",
             tint = Color.White
         )
