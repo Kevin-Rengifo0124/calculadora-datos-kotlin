@@ -89,3 +89,52 @@ fun ResultadoImc(
         }
     }
 }
+
+@Composable
+fun BotonCalcularImc(
+    nombre: String,
+    peso: String,
+    estatura: String,
+    onResultado: (Double, String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    scope: kotlinx.coroutines.CoroutineScope
+) {
+
+    FloatingActionButton(
+        onClick = {
+
+            val pesoNum = peso.toDoubleOrNull()
+            val estaturaNum = estatura.toDoubleOrNull()
+
+            if (pesoNum != null && estaturaNum != null && estaturaNum > 0) {
+
+                val imc = pesoNum / (estaturaNum * estaturaNum)
+
+                val categoria = when {
+                    imc < 18.5 -> "Bajo peso"
+                    imc < 25 -> "Normal"
+                    imc < 30 -> "Sobrepeso"
+                    else -> "Obesidad"
+                }
+
+                onResultado(imc, categoria)
+
+                scope.launch {
+                    snackbarHostState.showSnackbar("Cálculo realizado correctamente")
+                }
+
+            } else {
+                scope.launch {
+                    snackbarHostState.showSnackbar("Ingrese datos válidos")
+                }
+            }
+        },
+        containerColor = Color(0xFF2596BE)
+    ) {
+        Icon(
+            imageVector = Icons.Default.Calculate,
+            contentDescription = "Calcular IMC",
+            tint = Color.White
+        )
+    }
+}
